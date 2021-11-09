@@ -4,20 +4,23 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // import { deleteTodo } from "../../redux/todos/todos-operations";
-import { getTodos } from "../../redux/todos/todos-selector";
-import actions from "../../redux/todos/todos-operations";
-const { deleteTodo, fetchTodo } = actions;
+// import { getTodos } from "../../redux/todos/todos-selector";
+import { todosSelector, todosOperations } from "redux/todos";
+// import actions from "../../redux/todos/todos-operations";
+const { deleteTodo, fetchTodo } = todosOperations;
 
 function TodoList() {
-  const todos = useSelector(getTodos);
+  // const todos = useSelector(getTodos);
+  const todos = useSelector(todosSelector.getTodos);
   const dispatch = useDispatch();
   const onDeleteTodo = (id) => dispatch(deleteTodo(id));
-  const onFetchTodo = () => dispatch(fetchTodo());
+  // const onFetchTodo = () => dispatch(fetchTodo());
 
   useEffect(() => {
-    const a = onFetchTodo();
-    console.log(a);
-  }, []);
+    dispatch(fetchTodo());
+    // const a = onFetchTodo();
+    // console.log(a);
+  }, [dispatch]);
 
   // console.log(todos);
 

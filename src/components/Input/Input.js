@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 // import addTodo from "../../redux/todos/todos-operations";
-import actions from "../../redux/todos/todos-operations";
-const { addTodo } = actions;
+// import actions from "../../redux/todos/todos-operations";
+// const { addTodo } = actions;
+import { todosOperations } from "redux/todos";
+const { addTodo } = todosOperations;
 
 function Input() {
   const [name, setName] = useState("");

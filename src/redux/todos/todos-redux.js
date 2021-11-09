@@ -16,10 +16,14 @@ import {
   fetchTodoError,
 } from "./todos-actions";
 
+import a from "./todos-operations";
+const { fetchTodo } = a;
+
 // console.log(actions);
 
 const items = createReducer([], {
-  [fetchTodoSuccsess]: (state, { payload }) => payload,
+  [fetchTodo.fulfilled]: (state, { payload }) => payload,
+  // [fetchTodoSuccsess]: (state, { payload }) => payload,
   [addTodoSuccsess]: (state, { payload }) => [...state, payload],
   [deleteTodoSuccsess]: (state, { payload }) =>
     state.filter((todo) => todo.id !== payload),
@@ -32,9 +36,12 @@ const filter = (state = "", action) => {
 };
 
 const loading = createReducer(false, {
-  [fetchTodoRequest]: () => true,
-  [fetchTodoSuccsess]: () => false,
-  [fetchTodoError]: () => false,
+  [fetchTodo.pending]: () => true,
+  [fetchTodo.fulfilled]: () => false,
+  [fetchTodo.rejected]: () => false,
+  // [fetchTodoRequest]: () => true,
+  // [fetchTodoSuccsess]: () => false,
+  // [fetchTodoError]: () => false,
   [addTodoRequest]: () => true,
   [addTodoSuccsess]: () => false,
   [addTodoError]: () => false,
