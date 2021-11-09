@@ -25,13 +25,24 @@ import {
 
 axios.defaults.baseURL = "http://localhost:4040";
 
-const fetchTodo = () => (dispatch) => {
+// const fetchTodo = () => (dispatch) => {
+//   dispatch(fetchTodoRequest());
+
+//   axios
+//     .get("/todos")
+//     .then(({ data }) => dispatch(fetchTodoSuccsess(data)))
+//     .catch((error) => dispatch(fetchTodoError(error)));
+// };
+
+const fetchTodo = () => async (dispatch) => {
   dispatch(fetchTodoRequest());
 
-  axios
-    .get("/todos")
-    .then(({ data }) => dispatch(fetchTodoSuccsess(data)))
-    .catch((error) => dispatch(fetchTodoError(error)));
+  try {
+    const { data } = await axios.get("/todos");
+    dispatch(fetchTodoSuccsess(data));
+  } catch (error) {
+    dispatch(fetchTodoError(error));
+  }
 };
 
 const addTodo = (text) => (dispatch) => {
