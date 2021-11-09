@@ -9,12 +9,12 @@ import App from "./App";
 import store from "./redux/store";
 
 ReactDOM.render(
-  <Provider store={store.store}>
-    <PersistGate loading={null} persistor={store.persistor}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </PersistGate>
+  <Provider store={store}>
+    {/* <PersistGate loading={null} persistor={store.persistor}> */}
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+    {/* </PersistGate> */}
   </Provider>,
   document.getElementById("root")
 );

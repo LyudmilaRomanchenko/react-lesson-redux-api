@@ -18,34 +18,64 @@ import {
 import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
 
+const myMiddleWare = (store) => (next) => (action) => {
+  console.log("Моя прослойка", action);
+
+  next(action);
+};
+
 const middleware = [
   ...getDefaultMiddleware({
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
   }),
+  myMiddleWare,
   logger,
 ];
-
-const todosPersistConfig = {
-  key: "todos",
-  storage,
-  blacklist: ["filter"],
-};
 
 const store = configureStore({
   reducer: {
     counter: counterReducer,
-    todos: persistReducer(todosPersistConfig, todosReducer),
+    todos: todosReducer,
   },
   middleware,
   // указываем, что devtools нужны только при разработке
   devTools: process.env.NODE_ENV === "development",
 });
 
-const persistor = persistStore(store);
+export default store;
 
-export default { store, persistor };
+///////////////
+// const middleware = [
+//   ...getDefaultMiddleware({
+//     serializableCheck: {
+//       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//     },
+//   }),
+//   myMiddleWare,
+//   logger,
+// ];
+
+// const todosPersistConfig = {
+//   key: "todos",
+//   storage,
+//   blacklist: ["filter"],
+// };
+
+// const store = configureStore({
+//   reducer: {
+//     counter: counterReducer,
+//     todos: persistReducer(todosPersistConfig, todosReducer),
+//   },
+//   middleware,
+//   // указываем, что devtools нужны только при разработке
+//   devTools: process.env.NODE_ENV === "development",
+// });
+
+// const persistor = persistStore(store);
+
+// export default { store, persistor };
 
 // Без toolkit
 
